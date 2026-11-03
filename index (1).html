@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#102b25" />
+  <title>Milk Manager — Collection & Payments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">M<span>•</span></div>
+        <div><strong>Milk Manager</strong><small>Collection workspace</small></div>
+      </div>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav-menu">
+        <button class="nav-link active" data-page="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
+        <button class="nav-link" data-page="customers"><span class="nav-icon">♙</span>Customers <span class="nav-count" id="customerNavCount">0</span></button>
+        <button class="nav-link" data-page="entries"><span class="nav-icon">◷</span>Milk entries</button>
+        <button class="nav-link" data-page="payments"><span class="nav-icon">↗</span>Payments</button>
+        <button class="nav-link" data-page="reports"><span class="nav-icon">▤</span>Reports</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">✦</div>
+          <strong>Your records, organised.</strong>
+          <p>Keep every litre and payment in one place.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar">MM</div>
+          <div><strong>Milk Collector</strong><small>Local workspace</small></div>
+          <span class="profile-dots">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong id="breadcrumbPage">Dashboard</strong></div>
+        <div class="top-actions">
+          <span class="today-chip"><span class="live-dot"></span><span id="todayLabel"></span></span>
+          <button class="icon-button" id="exportBackup" title="Export backup">↓</button>
+        </div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="page-heading">
+          <div><p class="eyebrow">OVERVIEW</p><h1>Good morning<span class="heading-period">.</span></h1><p class="subheading">Here’s what’s happening with your milk collection today.</p></div>
+          <button class="primary-button" data-open-entry>＋ Add milk entry</button>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card dark-stat">
+            <div class="stat-top"><span>Today's customer records</span><span class="stat-symbol">◉</span></div>
+            <div class="stat-value"><strong id="statTodayMilk">0</strong><span>customers</span></div>
+            <div class="stat-foot"><span class="stat-dot"></span> <span id="statTodayEntries">0 entries</span> recorded today</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Milk calculation</span><span class="stat-symbol pale">₨</span></div>
+            <div class="stat-value"><strong id="statTodayAmount">On demand</strong></div>
+            <div class="stat-foot muted-foot">Calculate only in selected reports</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Active customers</span><span class="stat-symbol pale">♙</span></div>
+            <div class="stat-value"><strong id="statCustomers">0</strong></div>
+            <div class="stat-foot muted-foot">Households on your route</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Period balance</span><span class="stat-symbol pale">↗</span></div>
+            <div class="stat-value"><strong id="statOutstanding">See reports</strong></div>
+            <div class="stat-foot muted-foot">Generate a 10-day or custom report</div>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel collection-panel">
+            <div class="panel-heading"><div><h2>Today's collection</h2><p>Daily records saved without calculating totals</p></div><span class="date-tag" id="dashboardDate"></span></div>
+            <div class="session-row">
+              <div class="session-icon morning-icon">☀</div>
+              <div class="session-info"><strong>Morning collection</strong><small id="morningCount">0 customer entries</small></div>
+              <div class="session-total"><strong id="morningMilk">0 customers</strong><small id="morningAmount">Quantity saved only</small></div>
+            </div>
+            <div class="session-track"><span id="morningTrack"></span></div>
+            <div class="session-row evening-row">
+              <div class="session-icon evening-icon">☾</div>
+              <div class="session-info"><strong>Evening collection</strong><small id="eveningCount">0 customer entries</small></div>
+              <div class="session-total"><strong id="eveningMilk">0 customers</strong><small id="eveningAmount">Quantity saved only</small></div>
+            </div>
+            <div class="session-track"><span id="eveningTrack"></span></div>
+            <div class="collection-total"><span>Milk totals are not calculated automatically</span><strong id="collectionTotal">Calculate in Reports</strong></div>
+          </article>
+          <article class="panel quick-panel">
+            <div class="panel-heading"><div><h2>Quick actions</h2><p>Common tasks, one tap away</p></div></div>
+            <button class="quick-action" data-open-entry><span class="quick-icon green">＋</span><span><strong>Record milk</strong><small>Record morning or evening milk separately</small></span><b>→</b></button>
+            <button class="quick-action" data-page-link="customers"><span class="quick-icon blue">♙</span><span><strong>Add customer</strong><small>Save a new household and rate</small></span><b>→</b></button>
+            <button class="quick-action" data-page-link="payments"><span class="quick-icon orange">₨</span><span><strong>Record payment</strong><small>Update a customer's balance</small></span><b>→</b></button>
+            <button class="quick-action" data-page-link="reports"><span class="quick-icon purple">▤</span><span><strong>View reports</strong><small>Check totals for any period</small></span><b>→</b></button>
+          </article>
+        </div>
+        <article class="panel recent-panel">
+          <div class="panel-heading"><div><h2>Recent milk entries</h2><p>Your latest recorded collections</p></div><button class="text-button" data-page-link="entries">View all entries →</button></div>
+          <div class="table-wrap"><table><thead><tr><th>CUSTOMER</th><th>RATE / L</th><th>MORNING</th><th>EVENING</th><th>DATE</th><th>ACTION</th></tr></thead><tbody id="recentEntries"></tbody></table></div>
+        </article>
+      </section>
+
+      <section class="page" id="page-customers">
+        <div class="page-heading"><div><p class="eyebrow">YOUR ROUTE</p><h1>Customers<span class="heading-period">.</span></h1><p class="subheading">Manage households, contact details and individual milk rates.</p></div><button class="primary-button" id="addCustomerBtn">＋ Add customer</button></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="customerSearch" placeholder="Search by name or phone..." /></div><span class="result-count" id="customerCountLabel">0 customers</span></div>
+        <article class="panel"><div class="table-wrap"><table><thead><tr><th>CUSTOMER</th><th>PHONE</th><th>ADDRESS</th><th>RATE / LITRE</th><th>STATUS</th><th></th></tr></thead><tbody id="customersTable"></tbody></table></div></article>
+      </section>
+
+      <section class="page" id="page-entries">
+        <div class="page-heading"><div><p class="eyebrow">DAILY RECORD</p><h1>Milk entries<span class="heading-period">.</span></h1><p class="subheading">Enter morning and evening milk separately; both appear together in one customer row.</p></div><button class="primary-button" data-open-entry>＋ Add milk entry</button></div>
+        <div class="toolbar filters"><div class="search-box"><span>⌕</span><input id="entrySearch" placeholder="Search customer..." /></div><input type="date" id="entryDateFilter" class="date-input" /></div>
+        <article class="panel"><div class="table-wrap"><table><thead><tr><th>CUSTOMER</th><th>RATE / L</th><th>MORNING MILK</th><th>EVENING MILK</th><th>DATE</th><th>ACTION</th></tr></thead><tbody id="entriesTable"></tbody></table></div></article>
+      </section>
+
+      <section class="page" id="page-payments">
+        <div class="page-heading"><div><p class="eyebrow">MONEY RECORD</p><h1>Payments<span class="heading-period">.</span></h1><p class="subheading">Track payments made to customers and what is still outstanding.</p></div><button class="primary-button" id="addPaymentBtn">＋ Record payment</button></div>
+        <div class="stats-grid compact-stats">
+          <article class="stat-card"><div class="stat-top"><span>Milk total calculation</span><span class="stat-symbol pale">₨</span></div><div class="stat-value"><strong id="paymentMilkValue">₨0</strong></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Payment records</span><span class="stat-symbol pale">✓</span></div><div class="stat-value"><strong id="paymentPaid">₨0</strong></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Balance calculation</span><span class="stat-symbol pale">↗</span></div><div class="stat-value"><strong id="paymentDue">₨0</strong></div></article>
+        </div>
+        <article class="panel"><div class="panel-heading"><div><h2>Payment history</h2><p>Payments recorded for your customers</p></div></div><div class="table-wrap"><table><thead><tr><th>CUSTOMER</th><th>DATE</th><th>METHOD</th><th>NOTES</th><th>AMOUNT PAID</th><th></th></tr></thead><tbody id="paymentsTable"></tbody></table></div></article>
+      </section>
+
+      <section class="page" id="page-reports">
+        <div class="page-heading"><div><p class="eyebrow">INSIGHTS & STATEMENTS</p><h1>Reports<span class="heading-period">.</span></h1><p class="subheading">Milk and payment totals are calculated only when you generate a date-range report.</p></div><button class="secondary-button" id="printReport">↗ Print report</button></div>
+        <article class="panel report-filter-panel">
+          <div class="report-presets"><button class="preset active" data-preset="10">Last 10 days</button><button class="preset" data-preset="30">Last 30 days</button><button class="preset" data-preset="month">This month</button><button class="preset" data-preset="custom">Custom range</button></div>
+          <div class="date-range"><label>From date<input type="date" id="reportFrom" class="date-input"></label><label>To date<input type="date" id="reportTo" class="date-input"></label><button class="primary-button small-button" id="generateReport">Generate</button></div>
+        </article>
+        <div class="report-summary" id="reportSummary">
+          <article class="stat-card"><div class="stat-top"><span>Total milk</span><span class="stat-symbol pale">◉</span></div><div class="stat-value"><strong id="reportMilk">0.00 L</strong></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Milk value</span><span class="stat-symbol pale">₨</span></div><div class="stat-value"><strong id="reportAmount">₨0</strong></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Payments made</span><span class="stat-symbol pale">✓</span></div><div class="stat-value"><strong id="reportPaid">₨0</strong></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Period balance</span><span class="stat-symbol pale">↗</span></div><div class="stat-value"><strong id="reportBalance">₨0</strong></div></article>
+        </div>
+        <article class="panel"><div class="panel-heading"><div><h2>Customer-wise statement</h2><p id="reportPeriodLabel">Last 10 days</p></div></div><div class="table-wrap"><table><thead><tr><th>CUSTOMER</th><th>MILK (L)</th><th>MILK VALUE</th><th>PAID IN PERIOD</th><th>PERIOD BALANCE</th><th>OVERALL DUE</th></tr></thead><tbody id="reportTable"></tbody></table></div></article>
+      </section>
+
+      <footer class="footer"><span>Milk Manager <span class="footer-dot">•</span> Local demo version</span><span>Made to keep every litre accounted for.</span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header"><div><p class="eyebrow" id="modalEyebrow">NEW RECORD</p><h2 id="modalTitle">Add customer</h2></div><button class="close-button" id="closeModal" aria-label="Close">×</button></div>
+      <form id="modalForm"><div id="modalFields" class="modal-fields"></div><div class="modal-actions"><button type="button" class="secondary-button" id="cancelModal">Cancel</button><button type="submit" class="primary-button" id="saveModal">Save record</button></div></form>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
